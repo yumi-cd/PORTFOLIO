@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+/* ---------- base ---------- */
+
+body {
+    color: var(--black-color);
+    font-size: 16px;
+    font-family: "Noto Sans JP", sans-serif;
+    font-family: "Comfortaa", sans-serif;
+    line-height: 2;
+    letter-spacing: 0.1em;
+}
+
+:root {
+    /* 色管理用の変数 */
+    --black: #1E1E1E;
+    --white: #FDFAFA;
+    --blue: #00B2D7;
+    --pink:  #FE3781;
+    --yellow: #EEF660;
+}
+
+/* ---------- header ---------- */
+.site-header{
+  background:var(--blue);
+  color:var(--black);
+}
+
+/* 左右32px、中央寄せ */
+.header-inner{
+  margin-inline:auto;
+  padding-inline:32px;
+  height:72px;                   /* 任意。必要なら調整 */
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:32px;                      /* ロゴとナブの最小間隔確保 */
+}
+
+/* ロゴ画像は80×32で固定表示（比率崩れ防止） */
+.logo img{
+  display:block;
+  width:80px;
+  height:32px;
+  object-fit:contain;
+}
+
+/* ナビ */
+.global-nav ul{
+  display:flex;
+  align-items:center;
+  gap:32px;                      /* ナブ間32px */
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+.global-nav a{
+  color:var(--white);
+  text-decoration:none;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  line-height:1;
+}
+
+/* CONTACT：白塗り＋内側5pxのグラデ線、角丸11px */
+.btn-contact{
+  --r:11px;
+  --bw:5px;
+
+  position:relative;
+  display:inline-block;
+  padding:10px 16px;             /* 見た目で微調整OK */
+  border-radius:var(--r);
+  color:var(--black);
+  font-weight:700;
+  background:
+    linear-gradient(var(--contact-grad-start), var(--contact-grad-end)) border-box; /* 枠用 */
+  -webkit-mask:
+    linear-gradient(#000 0 0) padding-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;    /* Safari */
+          mask-composite:exclude;
+  background-clip:padding-box, border-box;
+}
+.btn-contact{
+  border:var(--bw) solid transparent;   /* “内側5pxの線” 表現 */
+  background:
+    linear-gradient(#fff, #fff) padding-box, /* 塗り（#FDFAFA） */
+    linear-gradient(90deg, var(--contact-grad-start), var(--contact-grad-end)) border-box; /* 線 */
+  color:var(--black);
+}
+
+/* ホバー（お好みで） */
+.btn-contact:hover{
+  filter:brightness(1.03);
+}
+
+/* SPで詰みすぎる場合の簡易折返し */
+@media (max-width: 720px){
+  .header-inner{ height:auto; padding-block:12px; }
+  .global-nav ul{ flex-wrap:wrap; row-gap:12px; }
+}
