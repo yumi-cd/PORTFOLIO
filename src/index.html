@@ -16,12 +16,9 @@
     <link rel="icon" href="〇〇.ico" />
     <link rel="apple-touch-icon" href="〇〇.png" />
     <!-- font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Righteous&display=swap" rel="stylesheet">
     <!-- css -->
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -29,37 +26,69 @@
     <script src="js/main.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.3/gsap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/kv-matrix.js"></script>
   </head>
 
   <body>
     <header class="header">
-      <div class="header-inner">
+      <div class="header__inner">
         <!--logo-->
-        <a class="header-logo" href="/">
+        <a class="header__logo" href="/">
           <img src="https://via.placeholder.com/80x32.png?text=Logo" alt="logo" width="80" height="32" />
         </a>
         <!--nav-->
-        <nav class="header-nav">
-          <ul class="header-nav__list">
-            <li class="header-nav__item">
-              <a class="header-nav__link" href="#profile">PROFILE</a>
-            </li>
-            <li class="header-nav__item">
-              <a class="header-nav__link" href="#works">WORKS</a>
-            </li>
-            <li class="header-nav__item">
-              <a class="header-nav__link" href="#process">PROCESS</a>
-            </li>
-            <li class="header-nav__item">
-              <a class="header-nav__link" href="#pricing">PRICING</a>
-            </li>
-            <li class="header-nav__item">
-              <a class="header-nav__link header-nav__link--contact btn-contact" href="#contact">CONTACT</a>
-            </li>
+        <nav class="header__nav">
+          <ul class="header__nav-list">
+            <li class="header__nav-item"><a class="header__nav-link" href="#profile">PROFILE</a></li>
+            <li class="header__nav-item"><a class="header__nav-link" href="#works">WORKS</a></li>
+            <li class="header__nav-item"><a class="header__nav-link" href="#process">PROCESS</a></li>
+            <li class="header__nav-item"><a class="header__nav-link" href="#pricing">PRICING</a></li>
+            <li class="header__nav-item"><a class="header__nav-link btn-contact" href="#contact">CONTACT</a></li>
           </ul>
         </nav>
       </div>
     </header>
+    <!-- KV -->
+    <section class="kv" aria-label="Hero">
+      <div class="kv__inner">
+        <img class="kv__ttl" src="img/kv.png" alt="kv-title" width="1500" height="1000">
+      </div>
+    </section>
+    
+    <!-- Profile -->
+    <section class="profile" id="profile" aria-label="Profile">
+      <div class="profile__inner">
+        <h2 class="profile__title">PROFILE</h2>
+    
+        <div class="profile__content">
+          <figure class="profile__mama">
+            <img src="img/profile-mama.png" alt="profile illustration" />
+          </figure>
+    
+          <div class="profile__card">
+            <ul class="profile__list">
+              <li class="profile__item">
+                <img class="profile__icon" src="img/Vector.svg" alt="">
+                <span class="profile__text">Yumi Kawasaki</span>
+              </li>
+              <li class="profile__item">
+                <img class="profile__icon" src="img/Vector2.svg" alt="">
+                <span class="profile__text">Asaka, Saitama</span>
+              </li>
+              <li class="profile__item">
+                <img class="profile__icon" src="img/Vector3.svg" alt="">
+                <span class="profile__text">HTML / CSS(SCSS) / JS / Git / GitHub / WordPress / Canva / Figma</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
 
   </body>
 </html>
