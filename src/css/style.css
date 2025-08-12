@@ -94,93 +94,128 @@ body {
 
 /* ---------- profile ---------- */
 .profile {
+  position: relative; /* ←斜め背景をbeforeで敷くために必要 */
   background: var(--yellow);
   padding: 64px 32px;
-  /* 人物イラスト */
-  /* 情報カード：グラデボーダー（左上ピンク→右下ブルー） */
-  /* レスポンシブ */
+  overflow: hidden; /* skewで飛び出す部分を隠す場合 */
+  /* 斜め背景 */
+}
+.profile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--yellow);
+  transform: skewY(-4deg); /* 斜めの角度 */
+  transform-origin: top left;
+  z-index: -1;
 }
 .profile__inner {
   max-width: 1200px;
   margin: 0 auto;
 }
-.profile__title {
-  font-size: 300px;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #FE3781, #00B2D7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+
+/* ---------- works ---------- */
+.works {
+  position: relative;
+  padding: 96px 0;
+  background-color: var(--white);
+  /*  作品一覧 */
+}
+.works__inner {
+  max-width: 1000px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+.works__title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.works__title img {
   display: inline-block;
-  transform: rotate(-7deg);
-  transform-origin: left bottom;
-  text-shadow: 6px 6px 0px #000, -2px 2px 0px #000, 2px -2px 0px #000, -2px -2px 0px #000; /* 左上 */
-}
-.profile__content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: end;
-  gap: 32px;
-}
-.profile__mama {
-  margin: 0;
-}
-.profile__mama img {
-  display: block;
-  width: 100%;
   height: auto;
-  -o-object-fit: contain;
-     object-fit: contain;
+  max-width: min(100%, 760px);
 }
-.profile__card {
-  padding: 24px;
-  border-radius: 12px;
-  background: linear-gradient(var(--yellow), var(--yellow)) padding-box, linear-gradient(135deg, #FE3781, #00B2D7) border-box;
-  border: 6px solid transparent;
-  background-clip: padding-box, border-box;
-  color: var(--black);
-}
-.profile__list {
+.works__list {
   display: grid;
-  gap: 16px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
 }
-.profile__item {
-  display: grid;
-  grid-template-columns: 24px 1fr;
-  align-items: center;
-  gap: 12px;
-}
-.profile__icon {
-  width: 24px;
-  height: 24px;
-  -o-object-fit: contain;
-     object-fit: contain;
-  display: block;
-}
-.profile__text {
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--black);
-  font-weight: 700;
-}
-@media (max-width: 1024px) {
-  .profile__title {
-    font-size: clamp(120px, 15vw, 220px);
+@media (max-width: 960px) {
+  .works__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-@media (max-width: 768px) {
-  .profile {
-    padding: 48px 16px;
-  }
-  .profile__content {
+@media (max-width: 600px) {
+  .works__list {
     grid-template-columns: 1fr;
   }
-  .profile__mama {
-    order: 2;
-  }
-  .profile__card {
-    order: 1;
-  }
+}
+
+/* 作品1つ */
+.works-card {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  /* 外枠のグラデ（5px） */
+  /* サムネはアスペクト固定 */
+  /* URLラベル（下の小文字） */
+}
+.works-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 5px;
+  border-radius: inherit;
+  background: linear-gradient(180deg, #FE3781 0%, #00B2D7 100%);
+  /* 中身をくり抜いて枠だけ表示 */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.works-card__link {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  text-decoration: none;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.works-card__link:hover, .works-card__link:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+.works-card__thumb {
+  aspect-ratio: 4/3;
+  display: block;
+  background: #f3f4f6;
+  overflow: hidden;
+}
+.works-card__thumb img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
+}
+.works-card__body {
+  padding: 16px 18px 18px;
+  color: var(--black);
+  display: grid;
+  align-content: start;
+  text-align: center;
+  gap: 10px;
+}
+.works-card__title {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 auto;
+}
+.works-card__url {
+  display: inline-block;
+  color: #6b7280;
+  border-top: 1px dashed #e5e7eb;
+  padding-top: 10px;
 }/*# sourceMappingURL=style.css.map */

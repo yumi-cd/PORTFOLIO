@@ -54,41 +54,76 @@
         <img class="kv__ttl" src="img/kv.png" alt="kv-title" width="1500" height="1000">
       </div>
     </section>
-    
     <!-- Profile -->
     <section class="profile" id="profile" aria-label="Profile">
       <div class="profile__inner">
-        <h2 class="profile__title">PROFILE</h2>
-    
+        <!-- タイトル画像 -->
+        <h2 class="profile__title">
+          <img src="img/profile-ttl.png" alt="PROFILE">
+        </h2>
+        <!-- 吹き出し/人物画像 -->
         <div class="profile__content">
-          <figure class="profile__mama">
-            <img src="img/profile-mama.png" alt="profile illustration" />
-          </figure>
-    
           <div class="profile__card">
-            <ul class="profile__list">
-              <li class="profile__item">
-                <img class="profile__icon" src="img/Vector.svg" alt="">
-                <span class="profile__text">Yumi Kawasaki</span>
-              </li>
-              <li class="profile__item">
-                <img class="profile__icon" src="img/Vector2.svg" alt="">
-                <span class="profile__text">Asaka, Saitama</span>
-              </li>
-              <li class="profile__item">
-                <img class="profile__icon" src="img/Vector3.svg" alt="">
-                <span class="profile__text">HTML / CSS(SCSS) / JS / Git / GitHub / WordPress / Canva / Figma</span>
-              </li>
-            </ul>
+            <img src="img/profile-mama.png" alt="profile illustration">
           </div>
         </div>
+    </section>
+    <!-- Works -->
+    <section class="works" id="works" aria-label="Works">
+      <div class="works__inner">
+      <!-- タイトル画像 -->
+      <h2 class="works__title">
+        <img src="img/works-ttl.png" alt="WORKS" width="840" height="220" decoding="async">
+      </h2>
+      <!-- 作品一覧 -->
+      <div class="works__list">
+        <!-- item 1 ばぁの手 -->
+        <article class="works__item works-card" aria-labelledby="works-1-title">
+          <a class="works-card__link" href="https://example.com/baa-no-te" target="_blank" rel="noopener">
+            <figure class="works-card__thumb">
+              <img src="img/work1.png" alt="ばぁの手 サイトサムネイル" loading="lazy" width="640" height="400">
+            </figure>
+            <div class="works-card__body">
+              <h3 id="works-1-title" class="works-card__title">ばぁの手</h3>
+              <ul class="works-card__stack" aria-label="使用技術">
+                <li>Figma</li><li>HTML</li><li>CSS</li>
+              </ul>
+              <span class="works-card__url" aria-hidden="true">URL</span>
+            </div>
+          </a>
+        </article>
+        <!-- item 2 -->
+        <article class="works__item works-card" aria-labelledby="works-2-title">
+          <a class="works-card__link" href="https://example.com/portfolio" target="_blank" rel="noopener">
+            <figure class="works-card__thumb">
+              <img src="img/work2.png" alt="Portfolio サイトサムネイル" loading="lazy" width="640" height="400">
+            </figure>
+            <div class="works-card__body">
+              <h3 id="works-2-title" class="works-card__title">Portfolio</h3>
+              <ul class="works-card__stack" aria-label="使用技術">
+                <li>Figma</li><li>HTML</li><li>CSS</li><li>WordPress</li>
+              </ul>
+              <span class="works-card__url" aria-hidden="true">URL</span>
+            </div>
+          </a>
+        </article>
+        <!-- item 3 -->
+        <article class="works__item works-card" aria-labelledby="works-3-title">
+          <a class="works-card__link" href="https://example.com/cafe" target="_blank" rel="noopener">
+            <figure class="works-card__thumb">
+              <img src="img/work3.png" alt="cafe サイトサムネイル" loading="lazy" width="640" height="400">
+            </figure>
+            <div class="works-card__body">
+              <h3 id="works-3-title" class="works-card__title">cafe</h3>
+              <ul class="works-card__stack" aria-label="使用技術">
+                <li>Figma</li><li>HTML</li><li>CSS</li><li>WordPress</li>
+              </ul>
+              <span class="works-card__url" aria-hidden="true">URL</span>
+            </div>
+          </a>
+        </article>
       </div>
     </section>
-
-
-
-
-
-
-  </body>
-</html>
+    <!-- process -->
+    
+    
