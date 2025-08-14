@@ -101,27 +101,46 @@ body {
 
 /* ---------- profile ---------- */
 .profile {
-  position: relative; /* ←斜め背景をbeforeで敷くために必要 */
   background: var(--yellow);
   padding: 64px 32px;
-  overflow: hidden; /* skewで飛び出す部分を隠す場合 */
 
-  /* 斜め背景 */
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--yellow);
-    transform: skewY(-4deg); /* 斜めの角度 */
-    transform-origin: top left;
-    z-index: -1;
+  &__content { position: relative; }
+  /* ← 絶対配置の基準にする */
+  &__card { position: relative; }
+}
+
+/* 文字ブロック：画面幅で位置が可変 */
+.profile-info {
+  position: absolute;
+  z-index: 5;
+  top:  clamp(40px, 23vw, 240px);
+  left: clamp(16px,  7vw,  92px);
+  padding: clamp(12px, 3vw, 24px);
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    row-gap: 14px;
+    color: var(--black);
   }
 
-  &__inner {
-    max-width: 1200px;
-    margin: 0 auto;
+  &__row {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    column-gap: 12px;
+    align-items: center;
+  }
+
+  &__icon { 
+    width: 28px; 
+    height: auto; 
+    display: block; 
   }
 }
+
+
 
 /* ---------- works ---------- */
 .works {
@@ -130,7 +149,6 @@ body {
   background-color: var(--white);
 
   &__inner {
-    max-width: 1000px;
     margin-inline: auto;
     padding-inline: 20px;
   }
@@ -242,8 +260,8 @@ body {
 
 /* ---------- process ---------- */
 .process {
-  --rail-top: clamp(90px, 14vw, 160px);   // 土台の上半分の高さ（微調整用）
-  --card-d:  clamp(230px, 29vw, 320px);   // 丸カードの直径（微調整用）
+  --rail-top: clamp(90px, 14vw, 160px);
+  --card-d:   clamp(230px, 29vw, 320px);
 
   padding: 96px 0;
   background: var(--yellow, #f6ff55);
@@ -252,76 +270,272 @@ body {
 
   &__title { margin-bottom: 18px; img { max-width: 760px; width: 100%; height: auto; } }
 
-  /* 土台画像を同じ箱に貼る */
-  &__list {
+  &__list{
     display: grid;
-    grid-template-columns: repeat(3, var(--card-d)); /* 丸の直径を列幅に */
-    justify-content: space-between;                  /* 土台の丸中心に合わせる */
-    row-gap: clamp(24px, 3vw, 36px);
+    grid-template-columns: repeat(3, var(--card-d));
+    grid-auto-rows: var(--card-d);                 // 各マスを直径に合わせた正方形に
+    place-items: center;                           // カードをマスの中心へ
+    gap: clamp(24px, 3vw, 36px);
     list-style: none;
+    margin-left: 25px;                                     // ←ul既定余白を消す
+    padding: 0;
     background: url("../img/Union.png") no-repeat center top / 100% auto,
                 url("../img/Union.png") no-repeat center bottom / 100% auto;
   }
 
-  @media (max-width: 960px) {
-    &__list {
-      background: none;                 /* SPは土台を非表示 */
-      padding-top: 0;
-      grid-template-columns: 1fr 1fr;   /* 2列 */
-      justify-content: normal;
+  @media (max-width: 960px){
+    &__list{
+      background: none;
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: auto;                        // SPは自由高さ
+      place-items: stretch;
       column-gap: 20px;
     }
   }
-  @media (max-width: 600px) {
-    &__list { grid-template-columns: 1fr; } /* 1列 */
+  @media (max-width: 600px){
+    &__list{ grid-template-columns: 1fr; }
   }
 }
 
-/* 丸カード（正円にして中央寄せ） */
-.process-card {
+.process-card{
   position: relative;
+  width: 100%;                                     // 列幅にフィット
   aspect-ratio: 1 / 1;
   border-radius: 9999px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: clamp(12px, 1.6vw, 18px);
+  padding: clamp(16px, 6vw, 40px);
+  box-sizing: border-box;                           // padding込みでも正円
   text-align: center;
 
-  &__icon  { width: 56px; height: 56px; margin-bottom: 8px; }
-  &__title { font-weight: 700; letter-spacing: .02em; color: var(--black);}
+  &__icon  { width: 56px; height: 56px; display: block; } // 画像下の隙間防止
+  &__title { color: var(--black); }
   &__desc  { color: var(--black); }
-  &__btn {
+
+  &__btn{
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 120px;
-    height: 48px;
-    padding: 0 16px;
-    border: none;                 // ← border-imageは使わない
-    border-radius: 11px;
-    background: var(--white);     // 背景：白
-    color: var(--black);          // 文字：黒
-    font-weight: 700;
-    line-height: 1;
-    text-decoration: none;
-    z-index: 0;
-    transition: .2s;
+    width: 120px; height: 48px; padding: 0 16px;
+    border: none; border-radius: 11px;
+    background: var(--white); color: var(--black);
+    text-decoration: none; transition: .2s;
   }
-
-  /* 5pxグラデ枠 */
-  &__btn::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    padding: 5px;                
-    border-radius: inherit;
+  &__btn::before{
+    content:""; position:absolute; inset:0; padding:5px; border-radius:inherit;
     background: linear-gradient(90deg, var(--pink), var(--blue));
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
+    -webkit-mask-composite: xor; mask-composite: exclude;
     pointer-events: none;
   }
 }
+
+/* ---------- Pricing ---------- */
+.pricing{
+  padding: clamp(48px, 8vw, 96px) 0;
+  align-items: stretch;   
+  &__inner{ max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+  &__title{
+    margin: 0 0 clamp(16px,3vw,24px);
+    text-align: center;
+    img{ display:inline-block; max-width:min(100%, 760px); height:auto; }
+  }
+  &__item{ display: flex; }
+
+  /* グリッド */
+  &__list{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 28px;
+    @media (max-width: 960px){ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    @media (max-width: 600px){ grid-template-columns: 1fr; }
+  }
+}
+
+/* カード */
+.pricing-card{
+  position: relative;
+  display: grid;                           /* ← flex から grid に */
+  grid-template-rows: auto 1fr auto;       /* 上：タイトル/価格、中：可変、下：ボタン */
+  height: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+
+  /* 枠線の外の白を消す：外周ピッタリのグラデ枠 */
+  border: 5px solid transparent;
+  background:
+    linear-gradient(var(--white), var(--white)) padding-box,
+    linear-gradient(180deg, var(--pink, #FE3781), var(--blue, #00B2D7)) border-box;
+
+  box-shadow: 0 6px 20px rgba(0,0,0,.06);
+
+  &__body{
+    grid-row: 1 / 3;                       /* ← 本文は1〜2行目に収める */
+    padding: clamp(20px, 3vw, 28px);
+    color: var(--black);
+    display: grid;
+    gap: 14px;
+    text-align: center;
+    align-content: start;
+  }
+
+  &__title{
+    margin: 0;
+    line-height: 1.4;
+    small{ font-size: .9em; font-weight: 400; }
+  }
+
+  &__price{
+    margin: 0;
+    font-weight: 700;
+    font-size: clamp(22px, 3.2vw, 28px);
+    .pricing-card__num{ font-size: 1.6em; line-height: 1; }
+  }
+
+  &__features{
+    text-align: left;    
+    display: grid; row-gap: 8px;
+    li{
+      position: relative; padding-left: 1.4em; line-height: 1.6;
+      &::before{ content: "✓"; position: absolute; left: 0; top: 0; }
+    }
+  }
+
+  /* 下部の帯 */
+  &__leadtime{
+    display: block;
+    color: var(--black);
+    text-align: center;
+    line-height: 48px;
+    border-radius: 10px;
+    background: var(--yellow);
+    margin: 32px;
+  }
+}
+
+// ---------- contact ----------
+.contact{
+  position: relative;
+  padding: clamp(18px, 2vw, 140px) 0;
+  overflow: hidden;
+}
+
+  &::before{
+    content:"";
+    position:absolute; inset:0;
+    background: var(--pink);
+    clip-path: polygon(0 14%, 100% 0, 100% 86%, 0 100%);
+    z-index:0;
+  }
+
+  &__inner{
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    min-height: 550px;                   
+    background: url("../img/contact-baby.png") no-repeat left bottom / contain;
+    z-index: 5;
+  }
+
+  &__lead{
+    position: absolute;
+    top: 35%;
+    left: 42%;
+    margin: 0;
+    color: var(--white);
+    font-size: clamp(24px, 2.4vw, 48px);
+  }
+
+/* CONTACTボタン */
+.contact__btn{
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 240px;      /* デザインに合わせて */
+  height: 80px;
+  font-size: 24px;       /* 指定どおり */
+  color: var(--black);
+  background: var(--white);
+  border-radius: 12px;
+
+  /* 枠線グラデ */
+  &::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 5px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--blue), var(--yellow));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+  }
+}
+
+// ---------- footer ---------- //
+.footer{
+  background: var(--blue);
+  color: var(--white);
+  padding: clamp(28px, 4vw, 48px) 0;
+
+  &__inner{
+    max-width: 250px;
+    margin-inline: auto;
+    padding-inline: 20px;
+    display: flex;
+    justify-content: center;              
+    align-items: flex-start;
+    gap: clamp(32px, 10vw, 140px);  
+  }
+
+  &__brand img{ display:block; height:auto; }
+
+  &__menu{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 12px;
+    text-align: center;
+
+    a{
+      color: var(--white);
+      text-decoration: none;
+      font-size: 12px;
+      opacity: .95;
+      transition: opacity .15s ease, transform .15s ease;
+    }
+    a:hover,
+    a:focus-visible{
+      opacity: 1;
+      transform: translateY(-1px);
+      outline: none;
+    }
+  }
+
+  /* 細い横線 */
+  &__rule{
+    width: min(92%, 1040px);
+    margin: clamp(20px, 4vw, 36px) auto 10px;
+    border: 0;
+    height: 1px;
+    background: rgba(255,255,255,.6);
+  }
+
+  &__copy{
+    margin: 0 auto;
+    text-align: center;
+    font-size: 12px;
+    opacity: .9;
+  }
+}
+

@@ -61,12 +61,30 @@
         <h2 class="profile__title">
           <img src="img/profile-ttl.png" alt="PROFILE">
         </h2>
-        <!-- 吹き出し/人物画像 -->
+        <!-- アイコン/テキスト -->
         <div class="profile__content">
           <div class="profile__card">
+            <div class="profile-info">
+              <ul class="profile-info__list">
+                <li class="profile-info__row">
+                  <img class="profile-info__icon" src="img/Vector.svg" alt="">
+                  <span class="profile-info__text">Yumi Kawasaki</span>
+                </li>
+                <li class="profile-info__row">
+                  <img class="profile-info__icon" src="img/Vector2.svg" alt="">
+                  <span class="profile-info__text">Asaka, Saitama</span>
+                </li>
+                <li class="profile-info__row profile-info__row--skills">
+                  <img class="profile-info__icon" src="img/Vector3.svg" alt="">
+                  <span>HTML CSS/SCSS JavaScript</br> Git/GitHub WordPress Canva Figma</span>
+                </li>
+              </ul>
+            </div>
+            <!-- 人物画像 -->
             <img src="img/profile-mama.png" alt="profile illustration">
           </div>
         </div>
+      </div>
     </section>
     <!-- Works -->
     <section class="works" id="works" aria-label="Works">
@@ -172,4 +190,88 @@
     </ol>
   </div>
 </section>
-    
+<!-- pricing -->
+<section class="pricing" id="pricing" aria-label="Pricing">
+  <div class="pricing__inner">
+    <h2 class="pricing__title">
+      <img src="img/pricing-ttl.png" alt="PRICING" width="840" height="220" decoding="async">
+    </h2>
+
+    <div class="pricing__list">
+      <!-- 1 -->
+      <article class="works-card" aria-labelledby="pricing-1-title">
+        <div class="pricing-card__body">
+          <h3 id="pricing-1-title" class="pricing-card__title">
+            静的コーディング<br><small>（全12ページ想定）</small>
+          </h3>
+          <p class="pricing-card__price"><span class="pricing-card__num">10</span>万〜</p>
+          <ul class="pricing-card__features" aria-label="含まれる内容">
+            <li>レスポンシブ</br>（SP・タブレット・PC）</li>
+            <li>軽微なアニメーション</br>(js・GSAP・jQuery含む)</li>
+          </ul>
+        </div>
+        <span class="pricing-card__leadtime">納期目安14日</span>
+      </article>
+
+      <!-- 2 -->
+      <article class="works-card" aria-labelledby="pricing-2-title">
+        <div class="pricing-card__body">
+          <h3 id="pricing-2-title" class="pricing-card__title">
+            WordPressテーマ構築<br><small>（全12ページ想定）</small>
+          </h3>
+          <p class="pricing-card__price"><span class="pricing-card__num">20</span>万〜</p>
+          <ul class="pricing-card__features" aria-label="含まれる内容">
+            <li>お問い合わせ機能</li>
+            <li>既存 or オリジナルテーマ対応</li>
+            <li>お知らせ・ブログ機能（カスタム投稿）</li>
+          </ul>
+        </div>
+        <span class="pricing-card__leadtime">納期目安14日</span>
+      </article>
+
+      <!-- 3 -->
+      <article class="works-card" aria-labelledby="pricing-3-title">
+        <div class="pricing-card__body">
+          <h3 id="pricing-3-title" class="pricing-card__title">
+            デザイン〜WordPress化<br><small>（全12ページ想定）</small>
+          </h3>
+          <p class="pricing-card__price"><span class="pricing-card__num">45</span>万〜</p>
+          <ul class="pricing-card__features" aria-label="含まれる内容">
+            <li>ヒアリング・構成案</li>
+            <li>レスポンシブ</li>
+            <li>WordPress実装（ブログ更新・お問い合わせ機能）</li>
+          </ul>
+        </div>
+        <span class="pricing-card__leadtime">納期目安3か月</span>
+      </article>
+    </div>
+  </div>
+</section>
+  <!-- contact -->
+  <section class="contact" id="contact" aria-label="Contact">
+    <div class="contact__inner">
+      <p class="contact__lead">I look forward to hearing from you !</p>
+      <a class="contact__btn" href="#contact-form">CONTACT</a>
+    </div>
+  </section>
+  <!-- footer -->
+  <footer class="footer" id="footer" aria-label="Footer">
+  <div class="footer__inner">
+    <a class="footer__brand" href="#top" aria-label="Top">
+      <img src="img/logo-white.svg" alt="Logo" width="100" height="28" decoding="async">
+    </a>
+    <nav class="footer__nav" aria-label="Footer links">
+      <ul class="footer__menu">
+        <li><a href="#profile">PROFILE</a></li>
+        <li><a href="#works">WORKS</a></li>
+        <li><a href="#process">PROCESS</a></li>
+        <li><a href="#pricing">PRICING</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+      </ul>
+    </nav>
+  </div>
+  <hr class="footer__rule">
+  <p class="footer__copy">© 2025 Yumi Kawasaki</p>
+  </footer>
+  </body>
+</html>
