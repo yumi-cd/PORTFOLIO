@@ -42,7 +42,6 @@ body {
   background: var(--blue);
   color: var(--black);
 
-
   &__inner {
     margin-inline: auto;
     padding-inline: 32px;
@@ -77,6 +76,114 @@ body {
     text-transform: uppercase;
     line-height: 1;
   }
+
+  /* ハンバーガー */
+  .hamburger {
+    display: inline-grid;
+    width: 32px;
+    height: 24px;
+    position: fixed;
+    top: 22px;
+    right: 40px;
+
+  .hamburger-bar{
+    position: absolute;
+    left: 50%;
+    width: 100%;
+    border-radius: 10px;
+    height: 4px;
+    background: var(--pink);
+    transition: transform .25s ease, opacity .2s ease;
+  }
+  .hamburger-bar:nth-child(1){ top: 0;    transform: translate(-50%, 0); }
+  .hamburger-bar:nth-child(2){ top: 50%;  transform: translate(-50%, -50%); }
+  .hamburger-bar:nth-child(3){ top: 100%; transform: translate(-50%, -100%); }
+
+  &.is-active {
+    .hamburger-bar:nth-child(1){
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    .hamburger-bar:nth-child(2){ opacity: 0; }
+    .hamburger-bar:nth-child(3){
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+}
+
+/* 784px以下：ハンバーガー開いたら“中央パネル＋グラデ枠”で表示 */
+@media (max-width: 784px){
+  .header__nav { display: none; }
+  /* 開いた状態：全画面レイヤー＋中央寄せ */
+  .header__nav.is-active{
+    display: grid;
+    place-items: center;
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+  }
+  /* うっすら背景（クリックで閉じられるように pointer-events 無効） */
+  .header__nav.is-active::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.15);
+    pointer-events: none;
+  }
+  /* 中央の白パネル（#FE3781→#00B2D7 のグラデ枠） */
+  .header__nav.is-active .header__nav-list{
+    position: relative;
+    z-index: 1;
+    width: min(86vw, 360px);
+    height: min(88vh, 560px);
+    margin: 0;
+    padding: clamp(20px, 5vw, 28px);
+    list-style: none;
+    border-radius: 16px;
+    /* 白面＋グラデ枠（5px） */
+    border: 5px solid transparent;
+    background:
+      linear-gradient(var(--white)) padding-box,
+      linear-gradient(180deg, var(--pink), var(--blue)) border-box;
+
+    display: grid;
+    place-content: center;
+    row-gap: clamp(20px, 4vw, 32px);
+    text-align: center;
+
+    /* ふわふわ上下 */
+    animation: floatY 4s ease-in-out infinite;
+  }
+
+  /* パネル上のリンク色など（黒文字に） */
+  .header__nav.is-active .header__nav-link{
+    color: var(--black);
+    font-weight: 800;
+    font-size: clamp(16px, 4.2vw, 18px);
+    transition: transform .15s ease, opacity .15s ease;
+  }
+  
+  .header__nav.is-active .header__nav-link:where(:hover,:focus-visible){
+    transform: translateY(-1px);
+    opacity: .9;
+    outline: none;
+  }
+
+  /* ふわふわ用 keyframes */
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+}
+
+/* 785px以上：PCナビ表示、ハンバーガー非表示 */
+@media (min-width: 785px){
+  .header__nav { display: block; }
+  .hamburger { display: none; }
+}
+
+.header .btn-contact::before{ display: none; }
 }
 
 /* ---------- kv ---------- */
@@ -87,25 +194,26 @@ body {
   margin-inline: auto;
   overflow: hidden;
   background: var(--pink);
+  box-shadow: 0 0 0 100vmax var(--pink); /* 背景いっぱいをピンクにする */
+  clip-path: inset(0 -100vmax);
 
   &__ttl{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    display:block;
-    object-fit:contain;
-    pointer-events:none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 }
+
+
 
 /* ---------- profile ---------- */
 .profile {
   background: var(--yellow);
   padding: 64px 32px;
+  width: 100vh;
 
   &__content { position: relative; }
-  /* ← 絶対配置の基準にする */
   &__card { position: relative; }
 }
 
@@ -423,7 +531,6 @@ body {
   position: relative;
   padding: clamp(18px, 2vw, 140px) 0;
   overflow: hidden;
-}
 
   &::before{
     content:"";
@@ -451,6 +558,7 @@ body {
     color: var(--white);
     font-size: clamp(24px, 2.4vw, 48px);
   }
+}
 
 /* CONTACTボタン */
 .contact__btn{
