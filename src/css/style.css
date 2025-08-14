@@ -218,4 +218,107 @@ body {
   color: #6b7280;
   border-top: 1px dashed #e5e7eb;
   padding-top: 10px;
+}
+
+/* ---------- process ---------- */
+.process {
+  --rail-top: clamp(90px, 14vw, 160px);
+  --card-d: clamp(230px, 29vw, 320px);
+  padding: 96px 0;
+  background: var(--yellow, #f6ff55);
+  /* 土台画像を同じ箱に貼る */
+}
+.process__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.process__title {
+  margin-bottom: 18px;
+}
+.process__title img {
+  max-width: 760px;
+  width: 100%;
+  height: auto;
+}
+.process__list {
+  display: grid;
+  grid-template-columns: repeat(3, var(--card-d)); /* 丸の直径を列幅に */
+  justify-content: space-between; /* 土台の丸中心に合わせる */
+  row-gap: clamp(24px, 3vw, 36px);
+  list-style: none;
+  background: url("../img/Union.png") no-repeat center top/100% auto, url("../img/Union.png") no-repeat center bottom/100% auto;
+}
+@media (max-width: 960px) {
+  .process__list {
+    background: none; /* SPは土台を非表示 */
+    padding-top: 0;
+    grid-template-columns: 1fr 1fr; /* 2列 */
+    justify-content: normal;
+    -moz-column-gap: 20px;
+         column-gap: 20px;
+  }
+}
+@media (max-width: 600px) {
+  .process { /* 1列 */ }
+  .process__list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 丸カード（正円にして中央寄せ） */
+.process-card {
+  position: relative;
+  aspect-ratio: 1/1;
+  border-radius: 9999px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(12px, 1.6vw, 18px);
+  text-align: center;
+  /* 5pxグラデ枠 */
+}
+.process-card__icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 8px;
+}
+.process-card__title {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--black);
+}
+.process-card__desc {
+  color: var(--black);
+}
+.process-card__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 48px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 11px;
+  background: var(--white);
+  color: var(--black);
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  z-index: 0;
+  transition: 0.2s;
+}
+.process-card__btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 5px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--pink), var(--blue));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }/*# sourceMappingURL=style.css.map */
