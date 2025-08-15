@@ -2,7 +2,7 @@
 
 /* ---------- base ---------- */
 body {
-  color: var(--black-color);
+  color: var(--black);
   font-size: 16px;
   font-family: "Righteous", sans-serif;
   font-weight: 400;
@@ -41,6 +41,10 @@ body {
 .header {
   background: var(--blue);
   color: var(--black);
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 
   &__inner {
     margin-inline: auto;
@@ -98,7 +102,7 @@ body {
   .hamburger-bar:nth-child(1){ top: 0;    transform: translate(-50%, 0); }
   .hamburger-bar:nth-child(2){ top: 50%;  transform: translate(-50%, -50%); }
   .hamburger-bar:nth-child(3){ top: 100%; transform: translate(-50%, -100%); }
-
+  // クリックして×になる
   &.is-active {
     .hamburger-bar:nth-child(1){
       top: 50%;
@@ -112,8 +116,8 @@ body {
   }
 }
 
-/* 784px以下：ハンバーガー開いたら“中央パネル＋グラデ枠”で表示 */
-@media (max-width: 784px){
+/* 900px以下：ハンバーガー開いたら中央パネルでnav表示 */
+@media (max-width: 900px){
   .header__nav { display: none; }
   /* 開いた状態：全画面レイヤー＋中央寄せ */
   .header__nav.is-active{
@@ -123,7 +127,7 @@ body {
     inset: 0;
     z-index: 60;
   }
-  /* うっすら背景（クリックで閉じられるように pointer-events 無効） */
+  /* うっすら背景（クリックで閉じられるように） */
   .header__nav.is-active::before{
     content: "";
     position: absolute;
@@ -131,7 +135,7 @@ body {
     background: rgba(0,0,0,.15);
     pointer-events: none;
   }
-  /* 中央の白パネル（#FE3781→#00B2D7 のグラデ枠） */
+  /* 中央の白パネル */
   .header__nav.is-active .header__nav-list{
     position: relative;
     z-index: 1;
@@ -177,8 +181,8 @@ body {
   }
 }
 
-/* 785px以上：PCナビ表示、ハンバーガー非表示 */
-@media (min-width: 785px){
+/* 901px以上：PCナビ表示、ハンバーガー非表示 */
+@media (min-width: 901px){
   .header__nav { display: block; }
   .hamburger { display: none; }
 }
@@ -187,34 +191,125 @@ body {
 }
 
 /* ---------- kv ---------- */
-.kv {
+.kv{
   position: relative;
-  width: 100%;
-  aspect-ratio: 1000 / 372;
-  margin-inline: auto;
-  overflow: hidden;
+  overflow: visible;    
+  height: clamp(260px, 42vw, 520px);
   background: var(--pink);
-  box-shadow: 0 0 0 100vmax var(--pink); /* 背景いっぱいをピンクにする */
+  box-shadow: 0 0 0 100vmax var(--pink);
   clip-path: inset(0 -100vmax);
+  --dot-color: #fb6ff4;
+  --dot-size: 40px;   /* グリッド間隔 */
+  --dot-stop: 9%;     /* 点の半径 */
+  --gap-stop: 13%;    /* 透過に切り替え */
 
-  &__ttl{
-    position: absolute;
+  &__inner{
     width: 100%;
-    height: 100%;
-    display: block;
   }
 }
 
+.kv-art{
+  position: absolute;
+}
+/* KV赤ちゃんの配置 */
+.kv-art--left {
+  position: absolute;
+  top: 50%;
+  left: 28%;  
+  height: auto;
+  width: clamp(340px, 56vw, 900px);
+}
 
+/* KV吹き出しの配置 */
+.kv-art--right {
+  position: absolute;
+  top: 50%;
+  left: 65%;                           
+  // transform: translate(-50%, -50%)
+            //  translateX(var(--bubble-shift)); /* そこから右へ寄せる */
+  z-index: 2;
+  width: clamp(340px, 56vw, 900px);
+  // width: clamp(500px, 60vw, 900px); 
+}
+
+/* アニメーション半円を描いて中央へ --- */
+@supports (offset-path: path('M0,0 L10,10')){
+  .kv-art{ offset-rotate: 0deg; }
+  /* KV赤ちゃん */
+  .kv-art--left{
+    offset-path: path('M -260 180 A 320 320 0 0 1 0 0');
+    animation: kv-arc 1.0s cubic-bezier(.2,.8,.2,1) 1.2s both;
+  }
+  /* KV吹き出し */
+  .kv-art--right{
+    offset-path: path('M 260 180 A 320 320 0 0 0 0 0');
+    animation: kv-arc 1.0s cubic-bezier(.2,.8,.2,1) 1.2s both;
+  }
+  @keyframes kv-arc{
+    0%   { offset-distance: 0%;   opacity: 0; }
+    100% { offset-distance: 100%; opacity: 1; }
+  }
+}
+/* 斜め下→中央のフェード */
+@supports not (offset-path: path('M0,0 L10,10')){
+  .kv-art--left { transform: translate(-16%, 10%); opacity: 0; animation: kv-fb-l .8s ease-out .05s both; }
+  .kv-art--right{ transform: translate( 16%, 10%); opacity: 0; animation: kv-fb-r .9s ease-out .12s both; }
+  @keyframes kv-fb-l { to { transform: translate(0,0); opacity: 1; } }
+  @keyframes kv-fb-r { to { transform: translate(0,0); opacity: 1; } }
+}
+
+/* KV背景の装飾 */
+.kv::after{
+  content:"";
+  position:absolute; top:0; left:50%;
+  transform: translateX(-50%);
+  width:100vw; height:100%;
+  z-index: -1;
+
+  /* 星の色 */
+  background-color: #ff4ec1;
+
+  /* 星の形（黒=見える部分）をタイルで繰り返し */
+  -webkit-mask: url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'>\
+    <polygon fill='black' points='20,2 24,14 37,14 26,22 30,34 20,26 10,34 14,22 3,14 16,14'/>\
+  </svg>") repeat;
+            mask: url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'>\
+    <polygon fill='black' points='20,2 24,14 37,14 26,22 30,34 20,26 10,34 14,22 3,14 16,14'/>\
+  </svg>") repeat;
+
+  /* 星の間隔 */
+  -webkit-mask-size: 20px 20px;
+        mask-size: 20px 20px;
+
+  /* 斜めにスクロール */
+  animation: kv-stars 30s linear infinite;
+}
+
+/*  keyframes  */
+@keyframes kv-stars{
+  0%   { -webkit-mask-position: 0% 0%;     mask-position: 0% 0%; }
+  100% { -webkit-mask-position: 100% 200%; mask-position: 100% 200%; }
+}
 
 /* ---------- profile ---------- */
 .profile {
   background: var(--yellow);
   padding: 64px 32px;
-  width: 100vh;
-
   &__content { position: relative; }
   &__card { position: relative; }
+
+  @media (max-width: 900px) {
+    padding: 64px 16px;
+  }
+}
+
+.profile__card > img{
+  position: absolute;
+  top: 0;
+  width: clamp(420px, 52vw, 780px); 
+  height: auto;
 }
 
 /* 文字ブロック：画面幅で位置が可変 */
@@ -646,4 +741,6 @@ body {
     opacity: .9;
   }
 }
+
+
 
